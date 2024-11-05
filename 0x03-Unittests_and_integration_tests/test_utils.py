@@ -34,6 +34,9 @@ class TestAccessNestedMap(unittest.TestCase):
         # Check that the exception message matches the expected key
         self.assertEqual(str(context.exception), f"'{expected_message}'")
 
+class TestGetJson(unittest.TestCase):
+    """ Class for Testing Get Json """
+    
     @parameterized.expand([
         ("http://example.com", {"payload": True}),
         ("http://holberton.io", {"payload": False})
