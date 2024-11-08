@@ -5,7 +5,7 @@
 import unittest
 from client import GithubOrgClient
 from parameterized import parameterized
-from unittest.mock import Mock, patch
+from unittest.mock import Mock, patch, MagicMock
 from utils import get_json, memoize
 
 
@@ -35,3 +35,16 @@ class TestGithubOrgClient(unittest.TestCase):
         mock_get_json.assert_called_once_with(
             f"https://api.github.com/orgs/{org_name}"
         )
+
+    @patch("client.GithubOrgClient.org",
+           new_callable=lambda: {"repos_url": "https://api.github.com/repos"})
+    def test_public_repos_url(self, mock_org):
+        """Test that the _public_repos_url
+        property returns the correct value."""
+
+        # Initialize the client
+        client = GithubOrgClient("test-org")
+
+        # Check that the _public_repos_url property returns the expected value
+        self.assertEqual(client._public_repos_url,
+                         "https://api.github.com/repos")
